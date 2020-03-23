@@ -1,7 +1,7 @@
 
 public class Minimax {
 
-	public double eval(ChessBoard cb) {
+	public static double eval(ChessBoard cb) {
 		char[][] d1 = getDiagonal1(cb);
 		char[][] d2 = getDiagonal2(cb);
 		char[][] v = getVertical(cb);
@@ -9,7 +9,7 @@ public class Minimax {
 		return res;
 	}
 	
-	public double roweval(char[][] board,char m) {
+	public static double roweval(char[][] board,char m) {
 		double sum = 0;
 		//r = rival move
 		//m = my move
@@ -18,29 +18,29 @@ public class Minimax {
 		for(int i=0;i<board.length;i++) {
 			String row = new String(board[i]);
 			
-			if(row.contains("-"+r+r+r+"-")) {
+			if(row.contains("-"+r+r+r+r+"-")) {
 				sum-=10000;
 			}
-			if(row.contains(r+r+r+"-"+r)) {
+			if(row.contains(r+r+r+r+"-"+r)) {
 				sum-=10000;
 			}
-			if(row.contains(r+r+"-"+r+r)) {
+			if(row.contains(r+r+r+"-"+r+r)) {
 				sum-=10000;
 			}
-			if(row.contains(r+"-"+r+r+r)) {
+			if(row.contains(r+r+"-"+r+r+r)) {
 				sum-=10000;
 			}
 			
-			if(row.contains("-"+m+m+m+"-")) {
+			if(row.contains("-"+m+m+m+m+"-")) {
 				sum+=10000;
 			}
-			if(row.contains(m+m+m+"-"+m)) {
+			if(row.contains(m+m+m+m+"-"+m)) {
 				sum+=10000;
 			}
-			if(row.contains(m+m+"-"+m+m)) {
+			if(row.contains(m+m+m+"-"+m+m)) {
 				sum+=10000;
 			}
-			if(row.contains(m+"-"+m+m+m)) {
+			if(row.contains(m+"-"+m+m+m+m)) {
 				sum+=10000;
 			}
 			
@@ -49,29 +49,28 @@ public class Minimax {
 	}
 	
 	public static char[][] getVertical(ChessBoard cb){
-		char[][] res = new char[ChessBoard.Y][ChessBoard.X];
-		for(int i=0;i<ChessBoard.X;i++) {
-			for(int j=0;j<ChessBoard.Y;j++) {
+		char[][] res = new char[cb.N][cb.N];
+		for(int i=0;i<cb.N;i++) { 
+			for(int j=0;j<cb.N;j++) {
 				res[j][i] = cb.board[i][j];
 			}
 		}
 		return res;
-
 	}
 	
 	public static char[][] getDiagonal1(ChessBoard cb){
-		char[][] d = new char[ChessBoard.X+ChessBoard.Y][ChessBoard.Y];
+		char[][] d = new char[cb.N+cb.N][cb.N];
 		
 		int i=0;
-		int x=ChessBoard.X-1,y=0;
+		int x=cb.N-1,y=0;
 		
-		while(y<ChessBoard.Y ) {
+		while(y<cb.N) {
 			int xi = x,yi = y;
 			int j=0;
-			while( xi < ChessBoard.X && yi < ChessBoard.Y ) {
+			while( xi < cb.N && yi < cb.N ) {
 				d[i][j++] = cb.board[xi++][yi++];
 			}
-			while(j<ChessBoard.Y) {
+			while(j<cb.N) {
 				d[i][j++] = '*';
 			}
 			if(x==0) {
@@ -86,21 +85,21 @@ public class Minimax {
 	}
 	
 	public static char[][] getDiagonal2(ChessBoard cb){
-		char[][] d = new char[ChessBoard.X+ChessBoard.Y][ChessBoard.Y];
+		char[][] d = new char[cb.N+cb.N][cb.N];
 		
 		int i=0;
 		int x=0,y=0;
 		
-		while(x<ChessBoard.X ) {
+		while(x<cb.N ) {
 			int xi = x,yi = y;
 			int j=0;
-			while( xi < ChessBoard.X && yi >= 0 ) {
+			while( xi < cb.N && yi >= 0 ) {
 				d[i][j++] = cb.board[xi++][yi--];
 			}
-			while(j<ChessBoard.Y) {
+			while(j<cb.N) {
 				d[i][j++] = '*';
 			}
-			if(y==ChessBoard.Y-1) {
+			if(y==cb.N-1) {
 				x++;
 			}else {
 				y++;
@@ -112,9 +111,7 @@ public class Minimax {
 	}
 	
 
-	
-	
-	public double value(ChessBoard cb,double[] ab,int depth) {
+	public static double value(ChessBoard cb,double[] ab,int depth) {
 		if(depth == 0) {
 			return eval(cb);
 		}
@@ -125,12 +122,11 @@ public class Minimax {
 		}
 	}
 	
-	public double max_value(ChessBoard cb,double[] ab,int depth){
-		char nextmove = cb.nextmove;
-		double v =  Double.MIN_VALUE;
+	public static double max_value(ChessBoard cb,double[] ab,int depth){
+		double v =  -Double.MAX_VALUE;
 		
-		for(int i=0;i<ChessBoard.X;i++) {
-			for(int j=0;j<ChessBoard.Y;j++) {
+		for(int i=0;i<cb.N;i++) {
+			for(int j=0;j<cb.N;j++) {
 				if(cb.board[i][j] == '-' && check_neighbor(cb,i,j,3)) {
 					cb.move(i, j);
 					v = Math.max(v, value(cb,ab,depth-1));
@@ -146,17 +142,15 @@ public class Minimax {
 		return v;
 	}
 	
-	public double min_value(ChessBoard cb,double[] ab,int depth){
-		char nextmove = cb.nextmove;
-		double v =  Double.MIN_VALUE;
+	public static double min_value(ChessBoard cb,double[] ab,int depth){
+		double v =  Double.MAX_VALUE;
 		
-		for(int i=0;i<ChessBoard.X;i++) {
-			for(int j=0;j<ChessBoard.Y;j++) {
+		for(int i=0;i<cb.N;i++) {
+			for(int j=0;j<cb.N;j++) {
 				if(cb.board[i][j] == '-' && check_neighbor(cb,i,j,3)) {
 					cb.move(i, j);
 					v = Math.min(v, value(cb,ab,depth-1));
 					cb.regret(i, j);
-					
 					if(v<=ab[0]){
 						return v;
 					}
@@ -167,11 +161,11 @@ public class Minimax {
 		return v;
 	}
 
-	public boolean check_neighbor(ChessBoard cb,int x,int y,int r) {
+	public static boolean check_neighbor(ChessBoard cb,int x,int y,int r) {
 		int xstart = x-r<0? 0:x-r;
-		int xend = x+r>=ChessBoard.X? ChessBoard.X-1:x+r;
+		int xend = x+r>=cb.N? cb.N-1:x+r;
 		int ystart = y-r<0? 0:y-r;
-		int yend = y+r>=ChessBoard.Y? ChessBoard.Y-1:y+r;
+		int yend = y+r>=cb.N? cb.N-1:y+r;
 		
 		for(int i=xstart;i<=xend;i++) {
 			for(int j=ystart;j<=yend;j++) {
@@ -190,27 +184,24 @@ public class Minimax {
 			}
 			System.out.println("");
 		}
-		
 	}
 	
 	public static void main(String[] args) throws Exception{
 		
-		System.out.println("Start");
-		char[][] b = {	{'-','-','-','-','-','-'},
-						{'-','-','O','-','O','-'},
-						{'-','-','-','X','-','O'},
-						{'-','-','X','-','O','-'},
-						{'-','X','-','X','-','-'},
-						{'-','O','-','-','X','-'},
-						{'-','-','-','-','-','-'},
-						{'-','-','O','-','O','-'},
-						{'-','X','-','X','-','O'},
-						{'-','-','X','-','O','-'},
-						{'-','-','-','X','-','-'},
-						{'-','O','-','-','-','-'}};
+		char[][] b = {	{'-','-','-','-','-','-','-','-','-','-','-','-'},
+						{'-','-','O','-','O','-','-','-','-','-','-','-'},
+						{'-','-','-','X','-','O','-','-','-','-','-','-'},
+						{'-','-','X','-','O','-','-','-','-','-','-','-'},
+						{'-','X','-','X','-','-','-','-','-','-','-','-'},
+						{'-','O','-','-','X','-','-','-','-','-','-','-'},
+						{'-','-','-','-','-','-','-','-','-','-','-','-'},
+						{'-','-','O','-','O','-','-','-','-','-','-','-'},
+						{'-','X','-','X','-','O','-','-','-','-','-','-'},
+						{'-','-','X','-','O','-','-','-','-','-','-','-'},
+						{'-','-','-','X','-','-','-','-','-','-','-','-'},
+						{'-','O','-','-','-','-','-','-','-','-','-','-'}};
 		
-		ChessBoard cb = new ChessBoard(b,'X',false);
-		
+		ChessBoard cb = new ChessBoard(b,12,6,'X',false);
 		
 	    char[][] d1 = getDiagonal1(cb);
 		char[][] d2 = getDiagonal2(cb);
@@ -221,9 +212,6 @@ public class Minimax {
 		print(d2);
 		System.out.println("**************");
 		print(v);
-
-
-		
 
     }
 	

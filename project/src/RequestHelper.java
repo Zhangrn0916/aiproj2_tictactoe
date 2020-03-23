@@ -53,7 +53,6 @@ public class RequestHelper {
             out.print(param);
             out.flush();
             
-			
             in = new BufferedReader(new InputStreamReader(conn.getInputStream(),"utf-8"));
             String line;
             while ((line = in.readLine()) != null) {
@@ -80,12 +79,16 @@ public class RequestHelper {
 	}
 	
 	public static void main(String[] args) throws Exception{
-		String result = RequestHelper.sendGet("type=team&teamId=1206");
-		JSONObject json = new JSONObject(result);
-		
-        //String s = RequestHelper.sendGet("type=team&teamId=1206");
-        System.out.println(json.get("code"));
-        System.out.println(json.get("userIds"));
+//		String result = RequestHelper.sendGet("type=team&teamId=1206");
+//		JSONObject json = new JSONObject(result);
+//		
+//        String s = RequestHelper.sendGet("type=team&teamId=1206");
+//        System.out.println(json.get("code"));
+//        System.out.println(json.get("userIds"));
+        
+//		String result = RequestHelper.sendGet("type=boardMap&gameId=76");
+//		System.out.print(result);
+//		JSONObject json = new JSONObject(result);
         
 //        String s1 = RequestHelper.sendPost("type=removeMember&teamId=1206&userId=0");
 //        System.out.println(s1);
