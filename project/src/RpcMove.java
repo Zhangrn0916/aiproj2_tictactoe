@@ -21,10 +21,8 @@ public class RpcMove {
 			
 			String[] cb = str.split("\n");
 			char[][] board = new char[cb.length][cb.length];
-			 
 			int cnto = 0;
 			int cntx = 0;
-			
 			for(int i=0;i<cb.length;i++) {
 				for(int j=0;j<cb.length;j++) {
 					board[i][j] = cb[i].charAt(j);
@@ -35,10 +33,8 @@ public class RpcMove {
 						cntx++;
 					}
 				}
-			}
-			
+			}	
 			return new ChessBoard(board,board.length,(int)json.get("target"),cnto<=cntx? 'O':'X',false);
-			
 		}else {
 			System.out.print("Get Board Map Failed");
 			return null;
@@ -47,10 +43,10 @@ public class RpcMove {
 	}
 	
 	public static String Move(String gameId,int move1,int move2) {
-		String result = RequestHelper.sendPost("type=move&teamId=1206&gameId="+gameId+"&move="+String.valueOf(move1)+","+String.valueOf(move2));
+		String result = RequestHelper.sendPost("type=move&teamId=1224&gameId="+gameId+"&move="+String.valueOf(move1)+","+String.valueOf(move2));
 		JSONObject json = new JSONObject(result);
 		if(json.getString("code").equals("OK")) {
-			return json.getString("moveId");
+			return String.valueOf(json.get("moveId"));
 		}else {
 			return "Move Failed";
 		}
@@ -60,7 +56,7 @@ public class RpcMove {
 		String result = RequestHelper.sendPost("type=game&gameType=TTT&teamId1=1206&teamId2="+rival);
 		JSONObject json = new JSONObject(result);
 		if(json.getString("code").equals("OK")) {
-			return json.getString("gameId");
+			return String.valueOf(json.get("gameId"));
 		}else {
 			return "Create Game Failed";
 		}

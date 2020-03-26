@@ -79,6 +79,9 @@ public class RequestHelper {
 	}
 	
 	public static void main(String[] args) throws Exception{
+		String res = RpcMove.Move("76", 8, 8);
+		System.out.println(res);
+		
 //		String result = RequestHelper.sendGet("type=team&teamId=1206");
 //		JSONObject json = new JSONObject(result);
 //		

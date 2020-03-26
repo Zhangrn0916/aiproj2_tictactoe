@@ -1,3 +1,4 @@
+import java.util.HashMap;
 
 public class Play {
 	
@@ -26,7 +27,6 @@ public class Play {
 		System.out.print("== Search End ==");
 		
 		if(checked) {
-			//String moveId = RpcMove.Move(gameId, movei, movej);
 			System.out.print(movei);
 			System.out.print(",");
 			System.out.println(movej);
@@ -37,12 +37,39 @@ public class Play {
 	}
 
 	public static void main(String[] args) {
-		ChessBoard cb = RpcMove.GetBoardString("76");
-		cb.print();
-		cb.move(4, 8);
-		cb.print();
-		cb.regret(4, 8);
-		cb.print();
+		
+		HashMap<String,Character> mymove_map = new HashMap<String,Character>();
+
+		while(true) {
+			
+		    String gameId = "76";
+			ChessBoard cb = RpcMove.GetBoardString(gameId);
+			if(cb == null) {
+				System.out.println("Game End");
+				break;
+			}
+			
+			if(mymove_map.containsKey(gameId)) {
+				cb.mymove = mymove_map.get(gameId);
+			}else {
+				mymove_map.put(gameId, cb.mymove);
+			}
+			
+			if(cb.mymove != cb.nextmove) {
+				continue;
+			}
+			
+			cb.print();
+			
+
+			try {
+				Thread.sleep(20000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+
 		
 	}
 

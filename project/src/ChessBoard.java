@@ -10,6 +10,8 @@ public class ChessBoard {
 	//检查是否是空棋盘 true时 棋盘为空
 	public boolean nomove;
 	
+	
+	
 	public ChessBoard(char[][] b,int n,int m,char nextmove,boolean nomove) {
 		this.board = b;
 		this.mymove = nextmove;
