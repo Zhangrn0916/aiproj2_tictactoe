@@ -102,7 +102,7 @@ public class ChessBoard {
 
     public void move(int i, int j) {
         board[i][j] = nextmove;
-        v[i][j] = nextmove;
+        v[j][i] = nextmove;
         d1[d1_pos[i][j].x][d1_pos[i][j].y] = nextmove;
         d2[d2_pos[i][j].x][d2_pos[i][j].y] = nextmove;
   
@@ -113,7 +113,7 @@ public class ChessBoard {
     public void regret(int i, int j) {
         this.nextmove = board[i][j];
         
-        v[i][j] = '-';
+        v[j][i]  = '-';
         d1[d1_pos[i][j].x][d1_pos[i][j].y] = '-';
         d2[d2_pos[i][j].x][d2_pos[i][j].y] = '-';	
         board[i][j] = '-';
