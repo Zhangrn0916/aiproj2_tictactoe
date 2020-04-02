@@ -34,7 +34,7 @@ public class RpcMove {
 					}
 				}
 			}	
-			return new ChessBoard(board,board.length,(int)json.get("target"),cnto<=cntx? 'O':'X',false);
+			return new ChessBoard(board,board.length,(int)json.get("target"),cnto<=cntx? 'O':'X',cnto == 0 ? true:false);
 		}else {
 			System.out.print("Get Board Map Failed");
 			return null;
